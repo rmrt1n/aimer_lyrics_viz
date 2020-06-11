@@ -20,8 +20,8 @@ are done in python, while the visualizations are made with R.
 **Data Source**: https://genius.com/artists/Aimer
 
 ## Data Visualizations
-<img src="https://github.com/rmrt1n/aimer_lyrics_viz/blob/master/top15_songs.png" height="400"/> 
-<img src="https://github.com/rmrt1n/aimer_lyrics_viz/blob/master/top15_words.png" height="400">
+<img src="https://github.com/rmrt1n/aimer_lyrics_viz/blob/master/top15_songs.png" width="455"/> <img src="https://github.com/rmrt1n/aimer_lyrics_viz/blob/master/top15_words.png" width="455">  
+
 ### wordcloud
 <img src="https://github.com/rmrt1n/aimer_lyrics_viz/blob/master/wordcloud.png" height="600"/> 
 
