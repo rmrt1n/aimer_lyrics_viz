@@ -5,18 +5,20 @@ output:
     code_folding: hide
 ---
 
-## load libraries
+## Load Libraries
 ```{r}
 library(dplyr)
 library(ggplot2)
 library(wordcloud)
+library(RColorBrewer)
 ```
-## import and view data
+
+## Import and View Data
 ```{r}
 df <- readr::read_csv("cleaned_data.csv")
 head(df, 10)
 
-# japanese particles
+# japanese particles that shouldn't be included in wordcloud
 jpn_prtcl <- c(
                "no", "wa", "o", "mo", "ni", "e", "de", "ga",
                "to", "ya", "ne", "yo", "ka", "wo", "i", "yo",
@@ -25,8 +27,11 @@ jpn_prtcl <- c(
               )
 ```
 
+## Summary Statistics
 ```{r}
+# set ggpplot theme
 theme_set(theme_light())
+
 # top 15 songs with most words
 df %>%
   group_by(Song_title) %>%
@@ -34,8 +39,13 @@ df %>%
   arrange(desc(N)) %>%
   head(15) %>%
   ggplot(aes(x = reorder(Song_title, N), y = N)) +
-  geom_bar(stat = "identity") +
-  coord_flip() 
+  geom_bar(stat = "identity", width = 0.6) +
+  coord_flip() +
+  labs(
+    title = "Top 15 Songs With Most Words",
+    x = "Song",
+    y = "Number of Words"
+  )
 
 # top 15 most used words
 df %>%
@@ -45,16 +55,25 @@ df %>%
   arrange(desc(N)) %>%
   head(15) %>%
   ggplot(aes(x = reorder(Word, N), y = N)) +
-  geom_bar(stat = "identity") +
-  coord_flip()
+  geom_bar(stat = "identity", width = 0.6) +
+  coord_flip() +
+  labs(
+    title = "Top 15 Most Used Words",
+    x = "Word",
+    y = "Count"
+  )
 
 # distribution of number of words in a song
 df %>%
   group_by(Song_title) %>%
   summarise(N = sum(Count)) %>%
   ggplot(aes(x = N)) +
-  geom_histogram(binwidth = 15)
-
+  geom_histogram(binwidth = 15) +
+  labs(
+    title = "Distribution of Number of Words in a Song",
+    x = "Number of Words in Song",
+    y = "Count"
+  )
 
 # distribution of word counts
 df %>%
@@ -63,26 +82,32 @@ df %>%
   summarise(N = sum(Count)) %>%
   filter(N < 200) %>%
   ggplot(aes(x = N)) +
-  geom_histogram(binwidth = 2)
+  geom_histogram(binwidth = 2) +
+  labs(
+    title = "Distribution of Number of Times a Word is Used",
+    x = "Number of Times a Word is Used",
+    y = "Count"
+  )
 ```
 
 ## word cloud
 ```{r}
-# word cloud
+# df for word cloud
 newdf <- df %>%
   filter(!Word %in% jpn_prtcl) %>%
   group_by(Word) %>%
-  summarise(N = sum(Count)) %>%
-  top_n(100)
-
+  summarise(N = sum(Count))
 
 # for reproducibility
-set.seed(2)
+set.seed(2023)
 
+# wordcloud
 wordcloud(
   words = newdf$Word,
   freq = newdf$N,
-  random.colors = TRUE,
+  max.words = 160,
+  scale = c(8, .3),
+  random.order = FALSE,
+  colors = brewer.pal(8, "Set2")
 )
-
 ```
