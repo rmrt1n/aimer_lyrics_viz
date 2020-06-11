@@ -20,7 +20,8 @@ Data collection and cleaning are done in python, while the visualizations are ma
 **Data Source**: https://genius.com/artists/Aimer
 
 ## Data Visualizations
-<img src="https://github.com/rmrt1n/aimer_lyrics_viz/blob/master/top15_songs.png" width="455"/> <img src="https://github.com/rmrt1n/aimer_lyrics_viz/blob/master/top15_words.png" width="455">  
+<img src="https://github.com/rmrt1n/aimer_lyrics_viz/blob/master/top15_songs.png" width="600"/>
+<img src="https://github.com/rmrt1n/aimer_lyrics_viz/blob/master/top15_words.png" width="600">  
 
 ### wordcloud
 <img src="https://github.com/rmrt1n/aimer_lyrics_viz/blob/master/wordcloud.png" height="600"/> 
