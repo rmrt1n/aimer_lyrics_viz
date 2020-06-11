@@ -2,6 +2,7 @@ import pandas as pd
 
 df = pd.read_csv('scraped_data.csv')
 
+# cover songs, duplicate songs, and songs not released yet
 to_drop = [
     'After Dark', 'Amazing Grace (Live in church ver.)',
     'Anata ni Deawanakereba kasetsutouka (Live in church ver.)',
