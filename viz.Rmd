@@ -1,0 +1,88 @@
+---
+title: "Visualizing The Most Common Words in Aimer Songs"
+output:
+  html_notebook:
+    code_folding: hide
+---
+
+## load libraries
+```{r}
+library(dplyr)
+library(ggplot2)
+library(wordcloud)
+```
+## import and view data
+```{r}
+df <- readr::read_csv("cleaned_data.csv")
+head(df, 10)
+
+# japanese particles
+jpn_prtcl <- c(
+               "no", "wa", "o", "mo", "ni", "e", "de", "ga",
+               "to", "ya", "ne", "yo", "ka", "wo", "i", "yo",
+               "kara", "yori", "na", "dake", "a", "te", "mo",
+               "mou"
+              )
+```
+
+```{r}
+theme_set(theme_light())
+# top 15 songs with most words
+df %>%
+  group_by(Song_title) %>%
+  summarise(N = sum(Count)) %>%
+  arrange(desc(N)) %>%
+  head(15) %>%
+  ggplot(aes(x = reorder(Song_title, N), y = N)) +
+  geom_bar(stat = "identity") +
+  coord_flip() 
+
+# top 15 most used words
+df %>%
+  filter(!Word %in% jpn_prtcl) %>%
+  group_by(Word) %>%
+  summarise(N = sum(Count)) %>%
+  arrange(desc(N)) %>%
+  head(15) %>%
+  ggplot(aes(x = reorder(Word, N), y = N)) +
+  geom_bar(stat = "identity") +
+  coord_flip()
+
+# distribution of number of words in a song
+df %>%
+  group_by(Song_title) %>%
+  summarise(N = sum(Count)) %>%
+  ggplot(aes(x = N)) +
+  geom_histogram(binwidth = 15)
+
+
+# distribution of word counts
+df %>%
+  filter(!Word %in% jpn_prtcl) %>%
+  group_by(Word) %>%
+  summarise(N = sum(Count)) %>%
+  filter(N < 200) %>%
+  ggplot(aes(x = N)) +
+  geom_histogram(binwidth = 2)
+```
+
+## word cloud
+```{r}
+# word cloud
+newdf <- df %>%
+  filter(!Word %in% jpn_prtcl) %>%
+  group_by(Word) %>%
+  summarise(N = sum(Count)) %>%
+  top_n(100)
+
+
+# for reproducibility
+set.seed(2)
+
+wordcloud(
+  words = newdf$Word,
+  freq = newdf$N,
+  random.colors = TRUE,
+)
+
+```
