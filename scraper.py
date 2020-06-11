@@ -60,7 +60,7 @@ while True:
 
 
 # write to csv
-with open('output.csv', 'w') as file:
+with open('scraped_data.csv', 'w') as file:
     writer = csv.writer(file)
     writer.writerow(['Song_title', 'Word', 'Count'])
     writer.writerows(l)
