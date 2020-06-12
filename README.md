@@ -2,7 +2,7 @@
 
 This repo contains some visualizations of words used in Aimer songs.  
 The data is scraped from [Genius.com](https://genius.com/artists/Aimer) using BeautifulSoup.  
-Data collection and cleaning are done in python, while the visualizations are made with R.  
+Data collection and cleaning are done in python, the visualizations are made with R.  
 
 ## Resources Used
 **Python Packages:**
