@@ -15,7 +15,7 @@ library(RColorBrewer)
 
 ## Import and View Data
 ```{r}
-df <- readr::read_csv("cleaned_data.csv")
+df <- readr::read_csv("data/cleaned_data.csv")
 head(df, 10)
 
 # japanese particles that shouldn't be included in wordcloud

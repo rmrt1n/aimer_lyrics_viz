@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv('scraped_data.csv')
+df = pd.read_csv('data/scraped_data.csv')
 
 # cover songs, duplicate songs, and songs not released yet
 to_drop = [
@@ -63,5 +63,5 @@ df.loc[(df.Song_title == '夏草に君を想う (Natsukusani Kimiwo Omou)', 'Son
 # final cleanup
 df = df[~df['Song_title'].isin(to_drop)]
 df = df[df['Word'].astype(str).str.contains('[a-zA-Z]')]
-df.to_csv('cleaned_data.csv', index=False)
+df.to_csv('data/cleaned_data.csv', index=False)
 
